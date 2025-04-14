@@ -1,4 +1,4 @@
-import { Routes, Route, NavLink, Outlet, useParams } from 'react-router-dom';
+import { Routes, Route, NavLink, Outlet, useParams, useMatch } from 'react-router-dom';
 import styles from './app.module.css';
 
 const fetchProductList = () => [
@@ -30,9 +30,11 @@ const Catalog = () => (
 );
 
 const ProductNotFound = () => <div>Такой товар не существует</div>;
-
 const Product = () => {
 	const params = useParams();
+	const urlMatchData = useMatch('/catalog/:type/:id');
+
+	console.log(urlMatchData.params.type);
 
 	const product = fetchProduct(params.id);
 
@@ -58,7 +60,7 @@ const ExtendedLink = ({ to, children }) => (
 				<>
 					<span>{children}</span>
 					<span>*</span>
-					<soan children="*" />
+					<span children="*" />
 				</>
 			) : (
 				children
@@ -88,6 +90,7 @@ const App = () => {
 				<Route path="/" element={<MainPage />} />
 				<Route path="/catalog" element={<Catalog />}>
 					<Route path="product/:id" element={<Product />} />
+					<Route path="service/:id" element={<Product />} />
 				</Route>
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="*" element={<NotFound />} />
